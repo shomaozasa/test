@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>アドレス帳一覧</title>
+</head>
+<body>
+    <h3>アドレス帳一覧</h3>
+    <div th:if="${addressList!=null and !addressList.empty}">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名前</th>
+                    <th>メールアドレス</th>
+                    <th>年齢</th>
+                    <th>電話番号</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="addressBook : ${addressList}">
+                    <td th:text="${addressBook.id}"></td>
+                    <td th:text="${addressBook.name}"></td>
+                    <td th:text="${addressBook.email}"></td>
+                    <td th:text="${addressBook.age}"></td>
+                    <td th:text="${addressBook.phone}"></td>
+                    <td>
+                        <form th:action="@{/addressbooks}" method="post">
+                            <input type="hidden" name="id" th:value="${addressBook.id}">
+                            <button type="submit">削除</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:unless="${addressList!=null and !addressList.empty}">
+        <div class="alert alert-danger" role="alert">
+            <h2>データなし</h2>
+        </div>
+    </div>
+    <p><a href="/addressbooks/register">新規登録</a></p>
+    <p><a href="/">戻る</a></p>
+</body>
+</html>
+
